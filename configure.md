@@ -53,7 +53,8 @@ Steps:
     TF_CPP_MIN_LOG_LEVEL=3 python3 -c "import tensorflow as tf; tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR); print('tensorflow version: %s' % tf.__version__); print('tensorflow.test.is_built_with_cuda(): %s' % tf.test.is_built_with_cuda()); print('tensorflow.test.is_gpu_available(): %s' % tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))"
     ```
 
-## Jupiter Notebook
+## Jupiter
+### Jupiter Notebook
 1. Install Jupiter Notebook (from [here](https://bibsian.github.io/posts/jupyter-setup/))
     ```
    sudo apt install -y libfreetype6-dev pkg-config libpng-dev jq    
@@ -91,4 +92,19 @@ Steps:
    ```
    jupyter notebook --ip=0.0.0.0
    ```
-   
+### Jupiter Lab
+1. Dependencies:
+   ```
+   sudo apt install -y libffi-dev
+   sudo apt install -y libssl1.0-dev
+   ```
+2. Install Jupiter Lab:
+   ```
+   sudo pip3 install jupyterlab
+   ```
+1. Run Jupiter lab: 
+   ```
+   jupyter lab --ip=0.0.0.0    
+   ```
+* **Important**: Jupiter Lab does not support `cv2.VideoCapture` (did not succeed to fix it). Use Jupiter Notebook instead, if you prefere `cv2` over `Jetcam` package.   
+ 
