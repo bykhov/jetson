@@ -97,14 +97,23 @@ Steps:
    ```
    sudo apt install -y libffi-dev
    sudo apt install -y libssl1.0-dev
+   sudo apt install curl
+   curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - # ignore the warning and paitiently wait for 20 seconds
+   sudo apt install -y nodejs 
    ```
 2. Install Jupiter Lab:
    ```
    sudo pip3 install jupyterlab
+   sudo pip3 install lckr-jupyterlab-variableinspector # variable inspector
    ```
 1. Run Jupiter lab: 
    ```
    jupyter lab --ip=0.0.0.0    
    ```
-* **Important**: Jupiter Lab does not support `cv2.VideoCapture` (did not succeed to fix it). Use Jupiter Notebook instead, if you prefere `cv2` over `Jetcam` package.   
- 
+
+### IDE
+The convenient work with Jupiter is to use IDE with remote Jupyter server capabilities, e.g. [Dataspell](https://www.jetbrains.com/help/dataspell/configuring-jupyter-notebook.html#remote).
+It enables tools like Copilot. Unfortunately, I did not succeed to use a variable inspector.
+
+## Final Remark
+It’s a good idea to reboot after the installation: `sudo reboot`
