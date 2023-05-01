@@ -34,7 +34,7 @@ Steps:
 `sudo -H pip3 install jetson-stats`
     
 ## TensorFlow 2
-1. Install TensorFlow 2.7 (from [here](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) and [here](https://jkjung-avt.github.io/jetpack-4.6/)):
+1. Install TensorFlow 2.6.2 (from [here](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) and [here](https://jkjung-avt.github.io/jetpack-4.6/)):
     ```
    sudo apt install-y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev \
                       zip libjpeg8-dev liblapack-dev libblas-dev gfortran
@@ -48,3 +48,47 @@ Steps:
       https://developer.download.nvidia.com/compute/redist/jp/v46 \
       tensorflow>=2
     ```
+1. Validate installation:
+    ```
+    TF_CPP_MIN_LOG_LEVEL=3 python3 -c "import tensorflow as tf; tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR); print('tensorflow version: %s' % tf.__version__); print('tensorflow.test.is_built_with_cuda(): %s' % tf.test.is_built_with_cuda()); print('tensorflow.test.is_gpu_available(): %s' % tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))"
+    ```
+
+## Jupiter Notebook
+1. Install Jupiter Notebook (from [here](https://bibsian.github.io/posts/jupyter-setup/))
+    ```
+   sudo apt install -y libfreetype6-dev pkg-config libpng-dev jq    
+   sudo pip3 install matplotlib 
+   sudo pip3 install jupyter
+    ```
+1. Configure Jupyter:
+   ```
+   jupyter notebook --generate-config
+   jupyter notebook password # enter password on promt
+   JUPYTER_CONFIG_FILE="$HOME/.jupyter/jupyter_notebook_config.py"
+   # Configuration string
+   JUPYTER_CONFIG_UPDATE=\
+   "c = get_config()
+
+   # Inline plotting
+   c.IPKernelApp.pylab = 'inline'
+
+   # Notebook config
+   c.NotebookApp.ip = '0.0.0.0'
+   c.NotebookApp.open_browser = False  #so that the ipython notebook does not opens up a browser by default
+   # Set the port to 8888
+   c.NotebookApp.port = 8888
+
+   # Configuration file for jupyter-notebook.
+   c.Notebook.allow_origin='*'
+
+   c.InteractiveShellApp.extensions = ['autoreload']
+   c.InteractiveShellApp.exec_lines = ['%autoreload 2']"
+
+   # Concat config string with original file and update config file
+   sudo printf '%s\n%s\n' "$JUPYTER_CONFIG_UPDATE" "$(sudo cat $JUPYTER_CONFIG_FILE)" > $JUPYTER_CONFIG_FILE
+   ```
+1. Run Jupiter Notebook:
+   ```
+   jupyter notebook --ip=0.0.0.0
+   ```
+   
