@@ -155,13 +155,7 @@ Steps:
    ```
 
 ## Video
-* Check if it is alive: `ls /dev/video0`
-* Another way to check (from [here](https://github.com/jetsonhacks/USB-Camera): 
-  ```bash
-  sudo apt install v4l-utils
-  v4l2-ctl --list-devices  		# (optional) short information
-  v4l2-ctl --all -d /dev/video0	# (optional) detailed information
-  ```
+
 
 ### IDE
 

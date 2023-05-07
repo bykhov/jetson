@@ -28,6 +28,6 @@ Note to change the camera device to `capture_device=0`
   plt.show()
   video_capture.release()
   ```
-* `cv2.imshow(window_title, frame)` does not work **remotely**  (from full examples from [USB-Camera](https://github.com/jetsonhacks/USB-Camera)).
+* `cv2.imshow(window_title, frame)` does not work  (from full examples from [USB-Camera](https://github.com/jetsonhacks/USB-Camera)).
 * [Fix](https://developer.ridgerun.com/wiki/index.php/How_to_Use_NVIDIA_OpenCV_Python_Bindings_on_Jetson_Boards) OpenCV installation (only if you have to!)
 
