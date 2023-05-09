@@ -72,6 +72,29 @@ Steps:
    TF_CPP_MIN_LOG_LEVEL=3 python3 -c "import tensorflow as tf; tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR); print('tensorflow version: %s' % tf.__version__); print('tensorflow.test.is_built_with_cuda(): %s' % tf.test.is_built_with_cuda()); print('tensorflow.test.is_gpu_available(): %s' % tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))"
    ```
 
+### TensorRT
+1. Environment variables (from [TensorRT on the Nvidia Jetson](https://docs.donkeycar.com/guide/robot_sbc/tensorrt_jetson_nano/)); Add the following lines to your `~/.bashrc` file, e.g. by `nano ~/.bashrc`
+	```bash
+	# Add this to your .bashrc file
+	export CUDA_HOME=/usr/local/cuda
+	# Adds the CUDA compiler to the PATH
+	export PATH=$CUDA_HOME/bin:$PATH
+	# Adds the libraries
+	export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+	```
+1. Test
+	```bash
+	source ~/.bashrc
+	nvcc --version
+	```
+1. Install (by [python3.6-pycuda-2021.1](https://github.com/jetson-nano-wheels/python3.6-pycuda-2021.1))
+	```bash
+	 sudo pip install 'https://github.com/jetson-nano-wheels/python3.6-pycuda-2021.1/releases/download/v0.0.1/pycuda-2021.1-cp36-cp36m-linux_aarch64.whl'
+	```
+1. Test
+	```python
+	import tensorrt as trt
+	```	
 ## Jupiter
 
 ### Jupiter Notebook
