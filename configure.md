@@ -21,8 +21,8 @@ Steps:
    ```bash
    sudo apt update
    sudo apt install nvidia-l4t* # upgrade to Jetpack 4.6.3
-   sudo apt upgrade 			# (optional) update all
-   sudo reboot  				# reboot because of firmware/kernel update
+   sudo apt upgrade 	# (optional) update all
+   sudo reboot  		# reboot because of firmware/kernel update
    ```
 4. Fix clock to the maximum speed (step 4 [here](https://pyimagesearch.com/2020/03/25/how-to-configure-your-nvidia-jetson-nano-for-computer-vision-and-deep-learning/)):
 
@@ -42,7 +42,9 @@ Steps:
    sudo apt-get install python3-pip
    ```
 7. [jtop](https://rnext.it/jetson_stats/) command:
-   `sudo -H pip3 install jetson-stats`
+   ```bash
+   sudo -H pip3 install jetson-stats
+   ```
 
 ## TensorFlow 2
 
