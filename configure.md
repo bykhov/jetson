@@ -48,7 +48,7 @@ Steps:
 
 ## TensorFlow 2
 
-1. Install TensorFlow 2.6.2
+1. Install TensorFlow pre-requirements
    (from [Jetson documentation](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html),
    [jetbot script](https://github.com/NVIDIA-AI-IOT/jetbot/blob/master/scripts/create-sdcard-image-from-scratch.sh)
    and [jkjung-avt blog](https://jkjung-avt.github.io/jetpack-4.6/)):
@@ -60,7 +60,10 @@ Steps:
    sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 \
      keras_preprocessing==1.1.2 keras_applications==1.0.8 \
      gast==0.4.0 protobuf pybind11 cython pkgconfig
-   sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
+   sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0 # takes time!!!
+   ```
+1. Install TensorFlow 2.6.2
+   ```bash
    sudo pip3 install --pre --extra-index-url \
      https://developer.download.nvidia.com/compute/redist/jp/v46 \
      tensorflow>=2
