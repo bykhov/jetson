@@ -47,11 +47,10 @@ Steps:
    ```
 
 ## TensorFlow 2
-
-1. Install TensorFlow pre-requirements
-   (from [Jetson documentation](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html),
+(from [Jetson documentation](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html),
    [jetbot script](https://github.com/NVIDIA-AI-IOT/jetbot/blob/master/scripts/create-sdcard-image-from-scratch.sh)
-   and [jkjung-avt blog](https://jkjung-avt.github.io/jetpack-4.6/)):
+   and [jkjung-avt blog](https://jkjung-avt.github.io/jetpack-4.6/))
+1. Install TensorFlow pre-requirements:
    ```bash
    sudo apt install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev \
                      zip libjpeg8-dev liblapack-dev libblas-dev gfortran
@@ -60,9 +59,9 @@ Steps:
    sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 \
      keras_preprocessing==1.1.2 keras_applications==1.0.8 \
      gast==0.4.0 protobuf pybind11 cython pkgconfig
-   sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0 # takes time!!!
+   sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0 # takes few minutes!!!
    ```
-1. Install TensorFlow 2.6.2
+1. Install TensorFlow 2.6.2 (may show no progress during installation)
    ```bash
    sudo pip3 install --pre --extra-index-url \
      https://developer.download.nvidia.com/compute/redist/jp/v46 \
@@ -118,23 +117,26 @@ Steps:
 ### Jupiter Lab
 
 1. Dependencies:
-   ```
+   ```bash
    sudo apt install -y libffi-dev libssl1.0-dev
    sudo apt install -y curl
    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - # ignore the warning and patiently
    ```
 2. Install Jupiter Lab:
-   ```
+   ```bash
    sudo pip3 install jupyterlab
-   sudo pip3 install lckr-jupyterlab-variableinspector # variable inspector
+   ```
+3. (optional) Variable inspector
+   ```bash
+   sudo pip3 install lckr-jupyterlab-variableinspector
    ```
 3. (optional) Interactive plots functionality with [ipympl](https://matplotlib.org/ipympl/)
    to be used with `%matplotlib ipympl` magic command:
    ```bash
-   sudo pip install ipympl
+   sudo pip3 install ipympl
    ```
 4. Configure Jupyter:
-   ```
+   ```bash
    jupyter lab --generate-config
    jupyter notebook password # enter password on promt
    lab="$HOME/.jupyter/jupyter_lab_config.py"
@@ -166,19 +168,24 @@ Steps:
 
 ## Video
 * Check if it is alive: `ls /dev/video0`
-* Another way to check (from [here](https://github.com/jetsonhacks/USB-Camera): 
+* Another way to check (from [here](https://github.com/jetsonhacks/USB-Camera)): 
   ```bash
   sudo apt install v4l-utils
   v4l2-ctl --list-devices  		# (optional) short information
   v4l2-ctl --all -d /dev/video0	# (optional) detailed information
   ```
 
-### IDE
+### Headless operation
+Usage of additional display and keyboard is inconvenient but, fortunately, there are few 'remote' work options.
+* Jupyter server as is, with optional extensions.
+* Use of IDE with remote Jupyter server support
+, e.g. [Dataspell](https://www.jetbrains.com/help/dataspell/configuring-jupyter-notebook.html#remote).
+It enables tools like Copilot. Unfortunately, I did not succeed to use a variable inspector in a remote Jupyter mode.
+* Use of remote Python by ssh is another option that do includes convenient debugger, variable inspector and Copilot.
+* Remote desktop (XRDP) can be configured (e.g. [Remote Desktop - XRDP](https://raspberry-valley.azurewebsites.net/NVIDIA-Jetson-Nano/))
 
-The convenient work with Jupiter is to use IDE with remote Jupyter server or remote ssh Python server capabilities, e.g. [Dataspell](https://www.jetbrains.com/help/dataspell/configuring-jupyter-notebook.html#remote).
-It enables tools like Copilot. Unfortunately, I did not succeed to use a variable inspector.
 
-### Final Remark
+## Final Remark
 It’s a good idea to reboot after the installation: `sudo reboot`
 
 ## Notes
