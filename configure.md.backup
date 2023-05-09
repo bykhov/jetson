@@ -19,8 +19,10 @@ Steps:
 3. Check and install updates (takes some time):
 
    ```
-   sudo apt-get update && sudo apt-get upgrade
-   sudo reboot  # reboot because of firmware/kernel update
+   sudo apt update
+   sudo apt install nvidia-l4t* # upgrade to Jetpack 4.6.3
+   sudo apt upgrade 			# (optional) update all
+   sudo reboot  				# reboot because of firmware/kernel update
    ```
 4. Fix clock to the maximum speed (step 4 [here](https://pyimagesearch.com/2020/03/25/how-to-configure-your-nvidia-jetson-nano-for-computer-vision-and-deep-learning/)):
 
@@ -28,7 +30,10 @@ Steps:
    sudo nvpmodel -m 0
    sudo jetson_clocks   
    ```
-5. Nice [nano](https://www.nano-editor.org/) editor: `sudo apt-get install nano`
+5. Nice [nano](https://www.nano-editor.org/) editor: 
+	```bash
+	sudo apt-get install nano
+	```
 
    <!--- 2. [Git](https://git-scm.com/): `sudo apt-get install git` --->
 6. Python basics:
@@ -155,7 +160,13 @@ Steps:
    ```
 
 ## Video
-
+* Check if it is alive: `ls /dev/video0`
+* Another way to check (from [here](https://github.com/jetsonhacks/USB-Camera): 
+  ```bash
+  sudo apt install v4l-utils
+  v4l2-ctl --list-devices  		# (optional) short information
+  v4l2-ctl --all -d /dev/video0	# (optional) detailed information
+  ```
 
 ### IDE
 

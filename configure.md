@@ -9,7 +9,7 @@ Steps:
    `sudo reboot`
 2. Operate wifi (from [Adding WiFi to the NVIDIA Jetson](https://learn.sparkfun.com/tutorials/adding-wifi-to-the-nvidia-jetson/all)):
 
-   ```
+   ```bash
    nmcli d           # list devices (optional)
    nmcli r wifi on   # verify that wifi is on (optional)
    nmcli d wifi list # list available networks (optional)
@@ -18,22 +18,27 @@ Steps:
 <!--- sudo nmcli d wifi connect SCE password samishamoon?! # connect to network --->
 3. Check and install updates (takes some time):
 
-   ```
-   sudo apt-get update && sudo apt-get upgrade
-   sudo reboot  # reboot because of firmware/kernel update
+   ```bash
+   sudo apt update
+   sudo apt install nvidia-l4t* # upgrade to Jetpack 4.6.3
+   sudo apt upgrade 			# (optional) update all
+   sudo reboot  				# reboot because of firmware/kernel update
    ```
 4. Fix clock to the maximum speed (step 4 [here](https://pyimagesearch.com/2020/03/25/how-to-configure-your-nvidia-jetson-nano-for-computer-vision-and-deep-learning/)):
 
-   ```
+   ```bash
    sudo nvpmodel -m 0
    sudo jetson_clocks   
    ```
-5. Nice [nano](https://www.nano-editor.org/) editor: `sudo apt-get install nano`
+5. Nice [nano](https://www.nano-editor.org/) editor: 
+	```bash
+	sudo apt-get install nano
+	```
 
    <!--- 2. [Git](https://git-scm.com/): `sudo apt-get install git` --->
 6. Python basics:
 
-   ```
+   ```bash
    sudo apt-get install python3-pip
    ```
 7. [jtop](https://rnext.it/jetson_stats/) command:
