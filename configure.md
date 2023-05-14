@@ -85,7 +85,7 @@ The followingt steps helped me:
    ```
    TF_CPP_MIN_LOG_LEVEL=3 python3 -c "import tensorflow as tf; tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR); print('tensorflow version: %s' % tf.__version__); print('tensorflow.test.is_built_with_cuda(): %s' % tf.test.is_built_with_cuda()); print('tensorflow.test.is_gpu_available(): %s' % tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))"
    ```
-### Tensorflow Hub/officialsudp 
+### Tensorflow Hub
 Pre-trained machine learning models ready for deployment
 1. * [Cmake](https://forums.developer.nvidia.com/t/how-does-jetson-nono-update-cmake-to-3-18/182786/4) update (without QT). It is required for build the pre-requirements in the next step. Note, the later version of Cmake (e.g., 1.25) can not be installed directly since the pre-installed version (3.10) is insuffient.
     ```bash
@@ -108,8 +108,7 @@ Pre-trained machine learning models ready for deployment
     sudo pip3 install kaggle
     sudo pip3 install oauth2client
     sudo pip3 install psutil
-    sudo pip3 install py-cpuinfo>=3.3.0
-    sudo pip3 install tensorflow-hub==0.12 # newer version require Python 3.7+
+    sudo pip3 install py-cpuinfo>=3.3.0    
     sudo pip3 install tensorflow-model-optimization
     sudo pip3 install tensorflow-datasets
     sudo pip3 install gin-config
@@ -117,14 +116,14 @@ Pre-trained machine learning models ready for deployment
     sudo pip3 install Cython
     sudo pip3 install "pyyaml>=5.1,<6.0" --ignore-installed
     sudo pip3 install pycocotools
-    sudo pip3 install tf-models-official --no-dependencies
+    sudo pip3 install tensorflow-hub==0.12 # newer version require Python 3.7+
     ```
 3. Validate
     ```python
     import tensorflow as tf
     import tensorflow_hub as hub
     ```
-* [Example](https://tfhub.dev/google/aiy/vision/classifier/food_V1/1) that also requires `sudo pip3 install scikit-image` (takes few minutes)
+* [Example](https://tfhub.dev/google/aiy/vision/classifier/food_V1/1) that also requires `sudo pip3 install scikit-image` (it takes few minutes to install)
 ### TensorRT
 Inference optimization
 1. Environment variables (from [TensorRT on the Nvidia Jetson](https://docs.donkeycar.com/guide/robot_sbc/tensorrt_jetson_nano/)); Add the following lines to your `~/.bashrc` file, e.g. by `nano ~/.bashrc`
