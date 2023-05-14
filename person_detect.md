@@ -2,6 +2,7 @@
 ## Goal
 * Inference pre-trained object-detection network and process its output
 * Remote SSL access (fully headless)
+* Light red or green LED according to a detection result.
 
 ## Network
 SSD Mobilenet V2 Object detection model with FPN-lite feature extractor, shared box predictor and focal loss, trained on COCO 2017 dataset with training images scaled to 320x320 [model](https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_320x320/1) from [Tensor-Hub](https://www.tensorflow.org/hub)

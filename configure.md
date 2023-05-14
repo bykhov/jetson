@@ -2,7 +2,7 @@
 **Goal:** Usage of
 * Headless (no GUI)
 * Tensorflow 2+
-* Python by remote SSH usable by a modern IDE with breakpoints, variable inspector, Copilot and etc. - [Dataspell](https://www.jetbrains.com/dataspell/) in my case.
+* Python by remote SSL usable by a modern IDE with breakpoints, variable inspector, Copilot and etc. - [Dataspell](https://www.jetbrains.com/dataspell/) in my case.
 * Native, without Docker container
 * *(optional)* JupyterLab 3+ with variable inspector
 * Note: `cv2.imshow` does not work for a remote connection

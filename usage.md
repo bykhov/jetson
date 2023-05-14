@@ -6,15 +6,8 @@ Some more explanations are [here](https://automaticaddison.com/how-to-blink-an-l
 
 ## Camera
 
-### Jetcam
-The recommended way to use camera is [Jetcam](https://github.com/NVIDIA-AI-IOT/jetcam).
-1. Install [Jetcam](https://github.com/NVIDIA-AI-IOT/jetcam) following `Setup`.
-2. Use [example](https://github.com/NVIDIA-AI-IOT/jetcam/blob/master/notebooks/usb_camera/usb_camera.ipynb). 
-Note to change the camera device to `capture_device=0`
-
-
 ### OpenCV
-* This is supposed to work (adapted from [USB-Camera](https://github.com/jetsonhacks/USB-Camera)):
+* The recommended way to use camera is (adapted from [USB-Camera](https://github.com/jetsonhacks/USB-Camera)):
   ```python
   import sys
   import cv2
@@ -30,4 +23,13 @@ Note to change the camera device to `capture_device=0`
   ```
 * `cv2.imshow(window_title, frame)` does not work **remotely**  (from full examples from [USB-Camera](https://github.com/jetsonhacks/USB-Camera)).
 * [Fix](https://developer.ridgerun.com/wiki/index.php/How_to_Use_NVIDIA_OpenCV_Python_Bindings_on_Jetson_Boards) OpenCV installation (only if you have to!)
+* 
+### Jetcam
+This is supposed to work [Jetcam](https://github.com/NVIDIA-AI-IOT/jetcam). However, I found camera resource release too challenging.
+1. Install [Jetcam](https://github.com/NVIDIA-AI-IOT/jetcam) following `Setup`.
+2. Use [example](https://github.com/NVIDIA-AI-IOT/jetcam/blob/master/notebooks/usb_camera/usb_camera.ipynb). 
+Note to change the camera device to `capture_device=0`
+
+
+
 
