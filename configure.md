@@ -1,9 +1,17 @@
-# Jetson configuration (Native, without Docker container)
+# Jetson configuration 
+**Goal:** Usage of
+* Headless (no GUI)
+* Tensorflow 2+
+* Python by remote SSH usable by a modern IDE with breakpoints, variable inspector, Copilot and etc. - [Dataspell](https://www.jetbrains.com/dataspell/) in my case.
+* Native, without Docker container
+* *(optional)* JupyterLab 3+ with variable inspector
+* Note: `cv2.imshow` does not work for a remote connection
 
-## Wi-Fi
+## General setup
+### Wi-Fi
+For some unknown reason, Wi-Fi does not work out of the box during the start-up setup.
 
-For some unknown reason, Wi-Fi does not work out of the box.
-Steps:
+The followingt steps helped me:
 
 1. Reboot:
    `sudo reboot`
@@ -16,6 +24,11 @@ Steps:
    sudo nmcli d wifi connect [SSID] password [PASSWORD] # connect to network
    ```
 <!--- sudo nmcli d wifi connect SCE password samishamoon?! # connect to network --->
+### Utilities and additional configuration
+1. [Disable GUI](https://www.forecr.io/blogs/bsp-development/how-to-disable-desktop-gui-on-jetson-modules)
+    ```bash
+    sudo systemctl set-default multi-user.target
+    ```
 3. Check and install updates (takes some time):
 
    ```bash
@@ -46,7 +59,8 @@ Steps:
    sudo -H pip3 install jetson-stats
    ```
 
-## TensorFlow 2
+## TensorFlow
+### TensorFlow 2
 (from [Jetson documentation](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html),
    [jetbot script](https://github.com/NVIDIA-AI-IOT/jetbot/blob/master/scripts/create-sdcard-image-from-scratch.sh)
    and [jkjung-avt blog](https://jkjung-avt.github.io/jetpack-4.6/))
@@ -71,8 +85,48 @@ Steps:
    ```
    TF_CPP_MIN_LOG_LEVEL=3 python3 -c "import tensorflow as tf; tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR); print('tensorflow version: %s' % tf.__version__); print('tensorflow.test.is_built_with_cuda(): %s' % tf.test.is_built_with_cuda()); print('tensorflow.test.is_gpu_available(): %s' % tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))"
    ```
-
+### Tensorflow Hub/officialsudp 
+Pre-trained machine learning models ready for deployment
+1. * [Cmake](https://forums.developer.nvidia.com/t/how-does-jetson-nono-update-cmake-to-3-18/182786/4) update (without QT). It is required for build the pre-requirements in the next step. Note, the later version of Cmake (e.g., 1.25) can not be installed directly since the pre-installed version (3.10) is insuffient.
+    ```bash
+    sudo apt install -y libssl-dev openssl1.0
+    wget -c --show-progress https://github.com/Kitware/CMake/releases/download/v3.19.1/cmake-3.19.1.tar.gz
+    tar xvf cmake-3.19.1.tar.gz
+    mkdir cmake-3.19.1-build
+    cd cmake-3.19.1-build
+    cmake -DBUILD_QtDialog=OFF ../cmake-3.19.1
+    make -j $(nproc)
+    #make test
+    sudo make install
+    cmake --version
+    cd ..
+    ```
+2. Manual install of [requirements](https://github.com/tensorflow/models/blob/master/official/requirements.txt):
+    ```python
+    sudo pip3 install six 
+    sudo pip3 install google-api-python-client
+    sudo pip3 install kaggle
+    sudo pip3 install oauth2client
+    sudo pip3 install psutil
+    sudo pip3 install py-cpuinfo>=3.3.0
+    sudo pip3 install tensorflow-hub==0.12 # newer version require Python 3.7+
+    sudo pip3 install tensorflow-model-optimization
+    sudo pip3 install tensorflow-datasets
+    sudo pip3 install gin-config
+    sudo pip3 install tf_slim
+    sudo pip3 install Cython
+    sudo pip3 install "pyyaml>=5.1,<6.0" --ignore-installed
+    sudo pip3 install pycocotools
+    sudo pip3 install tf-models-official --no-dependencies
+    ```
+3. Validate
+    ```python
+    import tensorflow as tf
+    import tensorflow_hub as hub
+    ```
+* [Example](https://tfhub.dev/google/aiy/vision/classifier/food_V1/1) that also requires `sudo pip3 install scikit-image` (takes few minutes)
 ### TensorRT
+Inference optimization
 1. Environment variables (from [TensorRT on the Nvidia Jetson](https://docs.donkeycar.com/guide/robot_sbc/tensorrt_jetson_nano/)); Add the following lines to your `~/.bashrc` file, e.g. by `nano ~/.bashrc`
 	```bash
 	# Add this to your .bashrc file
@@ -87,7 +141,7 @@ Steps:
 	source ~/.bashrc
 	nvcc --version
 	```
-1. Install (by [python3.6-pycuda-2021.1](https://github.com/jetson-nano-wheels/python3.6-pycuda-2021.1))
+1. Install PyCUDA 2021.1 (by [python3.6-pycuda-2021.1](https://github.com/jetson-nano-wheels/python3.6-pycuda-2021.1))
 	```bash
 	 sudo pip install 'https://github.com/jetson-nano-wheels/python3.6-pycuda-2021.1/releases/download/v0.0.1/pycuda-2021.1-cp36-cp36m-linux_aarch64.whl'
 	```
@@ -100,13 +154,13 @@ Steps:
 ### Jupiter Notebook
 
 1. Install Jupiter Notebook (from [here](https://bibsian.github.io/posts/jupyter-setup/))
-   ```
+   ```bash
    sudo apt install -y libfreetype6-dev pkg-config libpng-dev jq  
    sudo pip3 install matplotlib 
    sudo pip3 install jupyter
    ```
 2. Configure Jupyter:
-   ```
+   ```bash
    jupyter notebook --generate-config
    jupyter notebook password # enter password on promt
    JUPYTER_CONFIG_FILE="$HOME/.jupyter/jupyter_notebook_config.py"
@@ -133,7 +187,7 @@ Steps:
    sudo printf '%s\n%s\n' "$JUPYTER_CONFIG_UPDATE" "$(sudo cat $JUPYTER_CONFIG_FILE)" > $JUPYTER_CONFIG_FILE
    ```
 3. Run Jupiter Notebook:
-   ```
+   ```bash
    jupyter notebook --ip=0.0.0.0
    ```
 
@@ -205,15 +259,19 @@ Usage of additional display and keyboard is inconvenient but, fortunately, there
 , e.g. [Dataspell](https://www.jetbrains.com/help/dataspell/configuring-jupyter-notebook.html#remote).
 It enables tools like Copilot. Unfortunately, I did not succeed to use a variable inspector in a remote Jupyter mode.
 * Use of remote Python by ssh is another option that do includes convenient debugger, variable inspector and Copilot.
-* Remote desktop (XRDP) can be configured (e.g. [Remote Desktop - XRDP](https://raspberry-valley.azurewebsites.net/NVIDIA-Jetson-Nano/))
+* Remote desktop (XRDP) can be configured (e.g. [Remote Desktop - XRDP](https://raspberry-valley.azurewebsites.net/NVIDIA-Jetson-Nano/)). I did not use it.
 
 
-## Final Remark
-It’s a good idea to reboot after the installation: `sudo reboot`
+## Some small final remarks
+* It’s a good idea to reboot after the installation: `sudo reboot`
+* The order **is** important:
+    ```python
+    import cv2
+    import tensorflow as tf
+    ```
+* Don't import `tensorflow` if you don't have to.
 
-## Notes
+## Some interesting guides
 There are many interesting Jetson posts, I have found them (unfortunately, yet) unuseful:
-* [Cmake](https://forums.developer.nvidia.com/t/how-does-jetson-nono-update-cmake-to-3-18/182786/4) update - never
-   encountered the problem (also mentioned in some places, such as [YoloV4 Jetson Nano](https://github.com/Qengineering/YoloV4-ncnn-Jetson-Nano))
 * [Jetson Nano DNN image](https://github.com/Qengineering/Jetson-Nano-image) - did not succeed to run Jupyter
 * [OpenCV upgrage](https://github.com/Qengineering/Install-OpenCV-Jetson-Nano) - after install it altered some other packages
