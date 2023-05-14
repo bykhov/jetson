@@ -1,5 +1,5 @@
 # Person *presence* example
-The [code](mobilenet_v2_example.py)
+The source [code](mobilenet_v2_example.py).
 
 ## Goal
 * Inference pre-trained object-detection network and process its output
@@ -22,4 +22,4 @@ The electrical scheme follows [demo](https://automaticaddison.com/how-to-blink-a
 
 ## What can be improved?
 * Use a smaller network.
-* Use TensorRT optimization with FP16 or FP8. I have even taken a free project on Courser ([certificate](https://coursera.org/share/678fc097e9f7fb2e99b11a569bb6cb08)). It is also similar to Nvidia [course](https://courses.nvidia.com/courses/course-v1:DLI+L-FX-18+V2/course/) (that is free for me as an academic ambassador).
+* Use TensorRT optimization with FP16 or FP8.
