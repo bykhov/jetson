@@ -1,7 +1,9 @@
 # Person *presence* example
+The [code](mobilenet_v2_example.py)
+
 ## Goal
 * Inference pre-trained object-detection network and process its output
-* Remote SSL access (fully headless)
+* Remote SSL access (headless)
 * Light red or green LED according to a detection result.
 
 ## Network
