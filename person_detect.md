@@ -1,4 +1,4 @@
-# Person *presence* example
+# Person-presence example
 The source [code](mobilenet_v2_example.py).
 
 ## Goal
@@ -18,7 +18,7 @@ SSD Mobilenet V2 Object detection model with FPN-lite feature extractor, shared 
 * Inference frame rate is about 3 fps
 
 ## Blinking LEDs
-The electrical scheme follows [demo](https://automaticaddison.com/how-to-blink-an-led-using-nvidia-jetson-nano/#:~:text=In%20order%20to%20get%20the,7%20on%20the%20Jetson%20Nano.) with two LEDs lighting interchangeably for presence or non-presence.
+The electrical scheme follows [demo](https://automaticaddison.com/how-to-blink-an-led-using-nvidia-jetson-nano/#:~:text=In%20order%20to%20get%20the,7%20on%20the%20Jetson%20Nano.) with two LEDs lighting interchangeably for presence or non-presence. I have used two LEDs with common ground (pin 9) and pins 7 and 29 to drive LEDs ([pin mapping](https://developer.nvidia.com/embedded/learn/jetson-nano-2gb-devkit-user-guide). I have used 220$\Omega$ resistors, but LEDs look too dark and I suspect internal resistance is enough. 
 
 ## What can be improved?
 * Use a smaller network.
