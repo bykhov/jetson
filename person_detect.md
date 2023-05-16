@@ -22,4 +22,4 @@ The electrical scheme follows [demo](https://automaticaddison.com/how-to-blink-a
 
 ## What can be improved?
 * Use a smaller network.
-* Use TensorRT optimization with FP16 or FP8.
+* Use TensorRT optimization with FP16 or INT8.
